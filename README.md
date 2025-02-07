@@ -24,3 +24,6 @@ The aim of this project is to educate children about the importance of water con
 ## Conclusion
 This project aims to inspire children to become active participants in water conservation efforts, making a positive impact on their communities.
 
+## **Wireframe**
+
+![wireframe](./assets/wireframe.jpg)
