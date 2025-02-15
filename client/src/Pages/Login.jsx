@@ -28,7 +28,7 @@ export default function Login() {
       toast.success(response.data.message, { position: "top-right", autoClose: 3000 });
 
       // Redirect after login
-      setTimeout(() => navigate("/dashboard"), 2000);
+      setTimeout(() => navigate("/"), 2000);
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed", { position: "top-right", autoClose: 3000 });
     }
