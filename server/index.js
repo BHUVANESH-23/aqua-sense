@@ -11,8 +11,13 @@ const Leaderboard = require("./routes/leaderboard");
 dotenv.config();
 const app = express();
 
-// Middleware
-app.use(cors());
+// ✅ Fix CORS issue
+app.use(cors({
+  origin: ["http://localhost:5173", "https://aqua-sense-lilac.vercel.app"], // Allowed origins
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+}));
+
 app.use(express.json());
 
 // Routes
@@ -20,7 +25,6 @@ app.use("/api/signup", signupRoute);
 app.use("/api/login", loginRoute);
 app.use("/api/update-score", updateScoreRoute);
 app.use("/api/leaderboard", Leaderboard);
-
 
 // Connect to MongoDB
 mongoose

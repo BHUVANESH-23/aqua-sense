@@ -5,7 +5,12 @@ const User = require("../models/User");
 const router = express.Router();
 require("dotenv").config();
 
+console.log("✅ Signup route loaded!"); // Debugging
+
+
 router.post("/", async (req, res) => {
+  console.log("🟢 Signup request received:", req.body); // Debugging
+
   try {
     const { name, email, password } = req.body;
 
