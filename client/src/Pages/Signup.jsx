@@ -34,7 +34,7 @@ export function Signup() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/signup", {
+      const response = await axios.post("https://aqua-sense-lilac.vercel.app/api/signup", {
         name: formData.name,
         email: formData.email,
         password: formData.password,

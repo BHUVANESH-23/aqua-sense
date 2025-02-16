@@ -113,7 +113,7 @@ export default function FinalSection() {
     if (!usermail) return;
 
     try {
-      const response = await fetch("http://localhost:5000/api/update-score", {
+      const response = await fetch("https://aqua-sense-lilac.vercel.app/api/update-score", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

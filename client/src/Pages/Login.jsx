@@ -19,7 +19,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/login", formData);
+      const response = await axios.post("https://aqua-sense-lilac.vercel.app/api/login", formData);
 
       // Save token & user data to localStorage
       localStorage.setItem("token", response.data.token);
