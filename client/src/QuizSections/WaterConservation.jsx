@@ -31,7 +31,7 @@ const questions = [
 export default function WaterConservation() {
 
   const sectionId = "waterconservation";  // 🔹 Unique identifier for this quiz section
-  
+
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -74,10 +74,10 @@ export default function WaterConservation() {
       ...prev,
       [sectionId]: [...sectionAnsweredQuestions, sectionCurrentQuestion],
     }));
-  
+
     setIsAnswerConfirmed(false);
     setSelectedOption(null);
-  
+
     if (sectionCurrentQuestion + 1 < questions.length) {
       // Move to the next question
       setCurrentQuestion((prev) => ({
@@ -90,10 +90,10 @@ export default function WaterConservation() {
         ...prev,
         [sectionId]: questions.length, // Prevents further questions
       }));
-  
+
       // 🔹 Store completion in localStorage
       localStorage.setItem(`quizCompleted_${sectionId}`, "true");
-  
+
       setTimeout(() => {
         updateUserScore(score);
         navigate("/");  // Redirect to the main page or results page
@@ -159,48 +159,45 @@ export default function WaterConservation() {
           ))}
 
           {/* Sidebar */}
-          <Sidebar className=" bg-gradient-to-b from-indigo-400 to-blue-500 text-white flex flex-col h-screen rounded-r-3xl shadow-lg">
-            <SidebarHeader className="p-6 text-center">
-              <h2 className="text-3xl font-extrabold text-black">🌊 Water Conservation</h2>
+          <Sidebar className="bg-gradient-to-b from-indigo-400 to-blue-500 text-white flex flex-col h-screen rounded-r-3xl shadow-lg">
+            <SidebarHeader className="p-4 text-center">
+              <h2 className="text-2xl font-bold text-black">🌊 Water Conservation</h2>
             </SidebarHeader>
-            <SidebarContent className="flex-1 overflow-hidden p-4">
+            <SidebarContent className="flex-1 overflow-hidden p-3">
               <SidebarGroup>
                 {questions.map((q, index) => (
                   <button
                     key={q.id}
                     onClick={() => index === sectionCurrentQuestion ? setCurrentQuestion(prev => ({ ...prev, [sectionId]: index })) : null}
-                    className={`w-full text-left py-3 px-5 mb-4 flex items-center space-x-4 rounded-xl transition-all text-lg font-bold shadow-md
-          ${index === sectionCurrentQuestion ? "bg-yellow-400 text-black scale-105 shadow-lg" :
+                    className={`w-full text-left py-3  px-5 mb-5 flex items-center space-x-3 rounded-lg transition-all text-base font-semibold shadow-md
+        ${index === sectionCurrentQuestion ? "bg-yellow-400 text-black scale-105 shadow-lg" :
                         (Array.isArray(sectionAnsweredQuestions) && sectionAnsweredQuestions.includes(index))
                           ? "bg-green-500 text-white cursor-not-allowed"
-                          : "bg-gray-400 text-gray-900 cursor-not-allowed"}
-                                `}
+                          : "bg-gray-400 text-gray-900 cursor-not-allowed"}`}
                     disabled={Array.isArray(sectionAnsweredQuestions) && sectionAnsweredQuestions.includes(index)}
                   >
-                    {index === sectionCurrentQuestion ? <Unlock className="w-6 h-6" /> : <Lock className="w-6 h-6" />}
+                    {index === sectionCurrentQuestion ? <Unlock className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
                     <span>Question {index + 1}</span>
                   </button>
                 ))}
-
               </SidebarGroup>
             </SidebarContent>
           </Sidebar>
 
           {/* Question Content */}
-          <main className="flex-1 flex flex-col justify-center items-center p-10 text-center bg-blue-100">
-            <div className="max-w-3xl p-10 bg-white shadow-2xl rounded-3xl w-full flex flex-col justify-between h-[80vh] border-4 border-yellow-400">
+          <main className="flex-1 flex flex-col justify-center items-center p-8 text-center bg-blue-100">
+            <div className="max-w-3xl p-8 bg-white shadow-2xl rounded-3xl w-full flex flex-col justify-between h-[75vh] border-4 border-yellow-400">
               {sectionCurrentQuestion < questions.length ? (
-                <h1 className="text-4xl font-extrabold text-center text-blue-700">
+                <h1 className="text-3xl font-bold text-blue-700">
                   {questions[sectionCurrentQuestion]?.question || "Loading..."}
                 </h1>
               ) : (
-                <h1 className="text-4xl font-extrabold text-green-600 animate-bounce">
+                <h1 className="text-3xl font-bold text-green-600 animate-bounce">
                   🎉 Congratulations! You have completed the quiz! 🎉
                 </h1>
               )}
 
-
-              <div className="flex flex-col space-y-6 w-[450px] justify-center mx-auto">
+              <div className="flex flex-col space-y-4 w-[400px] justify-center mx-auto">
                 {questions[sectionCurrentQuestion] ? (
                   questions[sectionCurrentQuestion].options.map((option) => {
                     let btnClass = "bg-blue-500 text-white hover:bg-blue-700 scale-105 transition-all";
@@ -221,7 +218,7 @@ export default function WaterConservation() {
                       <Button
                         key={option}
                         onClick={() => setSelectedOption(option)}
-                        className={`w-full py-5 text-xl rounded-3xl font-bold transition-all ${btnClass}`}
+                        className={`w-full py-3 text-lg rounded-2xl font-semibold transition-all ${btnClass}`}
                         disabled={isAnswerConfirmed}
                       >
                         {option}
@@ -229,15 +226,15 @@ export default function WaterConservation() {
                     );
                   })
                 ) : (
-                  <p className="text-red-500 text-lg font-bold">⚠️ No question found!</p>
+                  <p className="text-red-500 text-lg font-semibold">⚠️ No question found!</p>
                 )}
-
               </div>
+
               {/* Confirm & Next Buttons */}
-              <div className="flex justify-between items-center w-full mt-6">
+              <div className="flex justify-between items-center w-full mt-5">
                 <Button
                   onClick={handleConfirmAnswer}
-                  className={`py-4 px-8 text-lg rounded-2xl font-bold transition-all shadow-lg ${selectedOption ? "bg-green-600 text-white hover:bg-green-700 scale-105" : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                  className={`py-3 px-6 text-base rounded-xl font-semibold transition-all shadow-md ${selectedOption ? "bg-green-600 text-white hover:bg-green-700 scale-105" : "bg-gray-400 text-gray-700 cursor-not-allowed"
                     }`}
                   disabled={!selectedOption || isAnswerConfirmed}
                 >
@@ -247,17 +244,15 @@ export default function WaterConservation() {
                 {isAnswerConfirmed && (
                   <Button
                     onClick={handleNextQuestion}
-                    className="py-4 px-8 text-lg bg-yellow-500 text-white rounded-2xl font-bold transition-all shadow-lg hover:bg-yellow-600 scale-105"
+                    className="py-3 px-6 text-base bg-yellow-500 text-white rounded-xl font-semibold transition-all shadow-md hover:bg-yellow-600 scale-105"
                   >
-                    Next Question
+                    Next
                   </Button>
                 )}
               </div>
-
             </div>
-
           </main>
-          <footer className="bg-transparent hover:bg-transparent absolute bottom-4 right-4 animate-bounce">
+          <footer className="bg-transparent hover:bg-transparent absolute bottom-3 right-3 animate-bounce">
             <SidebarTrigger className="hover:bg-transparent" />
           </footer>
         </div>
@@ -265,31 +260,31 @@ export default function WaterConservation() {
 
       {/* CSS for Ripple Effect */}
       <style>{`
-            .ripple {
-              width: 50px;
-              height: 50px;
-              background: rgba(173, 216, 230, 0.4);
-              border-radius: 50%;
-              position: absolute;
+          .ripple {
+            width: 40px;
+            height: 40px;
+            background: rgba(173, 216, 230, 0.4);
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0.8;
+            animation: ripple-effect 1s ease-out forwards;
+          }
+  
+          @keyframes ripple-effect {
+            0% {
+              transform: scale(1);
               opacity: 0.8;
-              animation: ripple-effect 1s ease-out forwards;
             }
-    
-            @keyframes ripple-effect {
-              0% {
-                transform: scale(1);
-                opacity: 0.8;
-              }
-              50% {
-                transform: scale(2);
-                opacity: 0.4;
-              }
-              100% {
-                transform: scale(3);
-                opacity: 0;
-              }
+            50% {
+              transform: scale(2);
+              opacity: 0.4;
             }
-          `}</style>
+            100% {
+              transform: scale(3);
+              opacity: 0;
+            }
+          }
+        `}</style>
     </>
   );
 }
