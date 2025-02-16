@@ -20,9 +20,9 @@ const questions = [
 ];
 
 
-export default function WaterSources() {
+export default function FinalSection() {
 
-  const sectionId = "watersources";  // 🔹 Unique identifier for this quiz section
+  const sectionId = "finalsection";  // 🔹 Unique identifier for this quiz section
   
   const navigate = useNavigate();
 
@@ -155,7 +155,7 @@ export default function WaterSources() {
            {/* Sidebar */}
            <Sidebar className=" bg-gradient-to-b from-indigo-400 to-blue-500 text-white flex flex-col h-screen rounded-r-3xl shadow-lg">
              <SidebarHeader className="p-6 text-center">
-               <h2 className="text-3xl font-extrabold text-black">🌊 Water Sources</h2>
+               <h2 className="text-3xl font-extrabold text-black">🌊 Final Quest</h2>
              </SidebarHeader>
              <SidebarContent className="flex-1 overflow-hidden p-4">
                <SidebarGroup>

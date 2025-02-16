@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ConfettiExplosion from "react-confetti-explosion";
 import {
   Sidebar,
   SidebarProvider,
@@ -9,19 +8,27 @@ import {
   SidebarGroup,
   SidebarTrigger,
 } from "../Components/ui/sidebar";
-
+import ConfettiExplosion from "react-confetti-explosion";
 import { Card, CardContent, CardHeader, CardTitle } from "../Components/ui/card";
 import { Button } from "../Components/ui/button";
-import {  Ghost, ListChecks, Trophy, User } from "lucide-react";
+import { Ghost, ListChecks, Trophy, User } from "lucide-react";
 
 const quizSections = [
-  { id: 1, title: "Water Cycle", description: "Learn about the water cycle and its importance." },
-  { id: 2, title: "Water Conservation", description: "Tips and tricks to conserve water at home." },
-  { id: 3, title: "Sources of Water", description: "Understand different sources of water." },
-  { id: 4, title: "Water Pollution", description: "Effects of water pollution and prevention methods." },
-  { id: 5, title: "Rain Water Harvesting", description: "Methods and ideas to collect and harvest rain water." },
-  { id: 6, title: "Ground Water Management", description: "Ways to preserve and conserve groundwater and use it." },
+  { id: 1, title: "Water Cycle", description: "Learn about the water cycle and its importance.", sectionId: "watercycle" },
+  { id: 2, title: "Water Conservation", description: "Tips and tricks to conserve water at home.", sectionId: "waterconservation" },
+  { id: 3, title: "Sources of Water", description: "Understand different sources of water.", sectionId: "watersources" },
+  { id: 4, title: "Water Pollution", description: "Effects of water pollution and prevention methods.", sectionId: "waterpollution" },
+  { id: 5, title: "Rain Water Harvesting", description: "Methods and ideas to collect and harvest rain water.", sectionId: "waterharvest" },
+  { id: 6, title: "Ground Water Management", description: "Ways to preserve and conserve groundwater .", sectionId: "groundwater" },
 ];
+
+const finalQuiz = {
+  id: 7,
+  title: "Final Challenge",
+  description: "Test your ultimate water knowledge!",
+  sectionId: "finalquiz",
+};
+
 
 export default function Quiz() {
   const sidebarRef = useRef(null);
@@ -43,6 +50,11 @@ export default function Quiz() {
       return () => clearTimeout(timer);
     }
   }, [isExploding]);
+
+
+  const allCompleted = quizSections.every(
+    (section) => localStorage.getItem(`quizCompleted_${section.sectionId}`) === "true"
+  );
 
   const updateGamePosition = () => {
     if (!sidebarRef.current || !gameRef.current) return;
@@ -97,7 +109,6 @@ export default function Quiz() {
             <SidebarHeader className="bg-[#C6E7FF]">
               <h2 className="text-2xl font-semibold pt-8 pl-6">Quiz Navigation</h2>
             </SidebarHeader>
-
             <SidebarContent className="bg-[#C6E7FF] flex-1 overflow-hidden">
               <SidebarGroup className="z-30">
                 <Link to="/" className="flex items-center space-x-2 p-3 hover:bg-gray-200 rounded-md">
@@ -108,10 +119,7 @@ export default function Quiz() {
                   <Trophy className="w-5 h-5" />
                   <span>Leaderboard</span>
                 </Link>
-                <Link to="/profile" className="flex items-center space-x-2 p-3 hover:bg-gray-200 rounded-md">
-                  <User className="w-5 h-5" />
-                  <span>Profile</span>
-                </Link>
+
               </SidebarGroup>
 
               <div className="h-full z-0">
@@ -137,30 +145,74 @@ export default function Quiz() {
             </SidebarContent>
           </Sidebar>
 
-          <main className="flex-1 p-6 bg-[#FBFBFB] overflow-auto">
-            <h1 className="text-2xl font-bold mb-4">Quiz Sections</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {quizSections.map((section) => (
-                <Link to={`/quiz/${section.id}`} key={section.id}> {/* Navigate to the respective quiz section */}
-                  <Card className="cursor-pointer">
-                    <CardHeader>
-                      <CardTitle>{section.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p>{section.description}</p>
-                      <Button className="mt-2" variant="outline">
-                        Start Quiz
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
+          <main className="flex-1 p-6 bg-gradient-to-r from-green-100 to-blue-200 overflow-auto rounded-lg shadow-xl border-4 border-green-100 ">
+            <h1 className="text-4xl font-extrabold mb-6 text-center text-pink-700 drop-shadow-lg">🎉 Quiz Sections 🎉</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {quizSections.map((section) => {
+                const sectionId = section.sectionId;
+                const isCompleted = localStorage.getItem(`quizCompleted_${sectionId}`) === "true";
+
+                return (
+                  <Link
+                    to={isCompleted ? "#" : `/quiz/${section.id}`}
+                    key={section.id}
+                    className={isCompleted ? "pointer-events-none cursor-not-allowed" : ""}
+                  >
+                    <Card
+                      className={`bg-white rounded-xl shadow-lg border-4 border-yellow-100 transition-all duration-300 
+              ${isCompleted ? "opacity-70 cursor-not-allowed" : "cursor-pointer transform hover:rotate-3 hover:scale-110 hover:bg-yellow-200"}`}
+                    >
+                      <CardHeader className="text-center text-yellow-800 font-bold text-lg">
+                        <CardTitle>{section.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="text-gray-700 text-center font-medium">
+                        <p>{section.description}</p>
+                        {!isCompleted && (
+                          <Button className="mt-3 bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-md ">
+                            Start Quiz
+                          </Button>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
+
+              {allCompleted && (
+                <div className="absolute bottom-10 left-[800px] transform -translate-x-1/2 animate-bounce">
+                  
+                  <Link to={`/quiz/${finalQuiz.id}`} key={finalQuiz.id}>
+                    <Card className="relative bg-gradient-to-br from-yellow-300 to-green-300 rounded-3xl shadow-lg border-4 border-green-500 transition-all duration-300 cursor-pointer transform hover:scale-110 hover:shadow-2xl hover:border-green-600 animate-float">
+
+                      {/* Glow Effect on Hover */}
+                      <div className="absolute inset-0 bg-white opacity-0 hover:opacity-20 transition duration-300 rounded-3xl"></div>
+
+                      <CardHeader className="text-center text-green-900 font-extrabold text-2xl p-4">
+                        <CardTitle className="relative">
+                          {finalQuiz.title}
+                          {/* Sparkle Effect */}
+                          <span className="absolute top-[-10px] right-[-10px] animate-ping text-yellow-500">✨</span>
+                        </CardTitle>
+                      </CardHeader>
+
+                      <CardContent className="text-gray-900 text-center font-medium text-lg p-5">
+                        <p>{finalQuiz.description}</p>
+                        <Button className="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-md animate-pulse hover:scale-105 hover:shadow-xl">
+                          🚀 Start Final Quiz 🚀
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </div>
+              )}
+
             </div>
 
-            <footer className="absolute bottom-4 right-4">
-              <SidebarTrigger />
+            <footer className="bg-transparent hover:bg-transparent absolute bottom-4 right-4 animate-bounce">
+              <SidebarTrigger className="hover:bg-transparent" />
             </footer>
           </main>
+
         </div>
       </SidebarProvider>
     </>

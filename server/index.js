@@ -6,6 +6,7 @@ const cors = require("cors");
 const signupRoute = require("./routes/signup");
 const loginRoute = require("./routes/login");
 const updateScoreRoute = require("./routes/updateScore");
+const Leaderboard = require("./routes/leaderboard");
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,8 @@ app.use(express.json());
 app.use("/api/signup", signupRoute);
 app.use("/api/login", loginRoute);
 app.use("/api/update-score", updateScoreRoute);
+app.use("/api/leaderboard", Leaderboard);
+
 
 // Connect to MongoDB
 mongoose
