@@ -19,7 +19,7 @@ const quizSections = [
   { id: 3, title: "Sources of Water", description: "Understand different sources of water.", sectionId: "watersources" },
   { id: 4, title: "Water Pollution", description: "Effects of water pollution and prevention methods.", sectionId: "waterpollution" },
   { id: 5, title: "Rain Water Harvesting", description: "Methods and ideas to collect and harvest rain water.", sectionId: "waterharvest" },
-  { id: 6, title: "Ground Water Management", description: "Ways to preserve and conserve groundwater .", sectionId: "groundwater" },
+  { id: 6, title: "Ground Water Management", description: "Ways to preserve, conserve and manage groundwater.", sectionId: "groundwater" },
 ];
 
 const finalQuiz = {
