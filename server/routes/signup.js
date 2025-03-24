@@ -7,6 +7,13 @@ require("dotenv").config();
 
 console.log("✅ Signup route loaded!"); // Debugging
 
+router.options("/", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.send();
+});
+
 router.post("/", async (req, res) => {
   console.log("🟢 Signup request received:", req.body); // Debugging
 
