@@ -34,7 +34,7 @@ export function Signup() {
     setLoading(true);
 
     try {
-      const response = await axios.post("https://aqua-sense.onrender.comapi/signup", {
+      const response = await axios.post("https://aqua-sense.onrender.com/api/signup", {
         name: formData.name,
         email: formData.email,
         password: formData.password,

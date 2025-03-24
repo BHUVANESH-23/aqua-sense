@@ -113,7 +113,7 @@ export default function WaterHarvesting() {
     if (!usermail) return;
 
     try {
-      const response = await fetch("https://aqua-sense.onrender.comapi/update-score", {
+      const response = await fetch("https://aqua-sense.onrender.com/api/update-score", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

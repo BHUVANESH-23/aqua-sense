@@ -19,7 +19,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://aqua-sense.onrender.comapi/login", formData);
+      const response = await axios.post("https://aqua-sense.onrender.com/api/login", formData);
 
       // Save token & user data to localStorage
       localStorage.setItem("token", response.data.token);
