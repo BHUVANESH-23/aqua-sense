@@ -109,7 +109,7 @@ export default function WaterCycle() {
     if (!usermail) return;
 
     try {
-      const response = await fetch("https://web-game-for-water-conservation-awareness.onrender.comapi/update-score", {
+      const response = await fetch("https://aqua-sense.onrender.comapi/update-score", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
