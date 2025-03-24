@@ -12,7 +12,7 @@ const LeaderBoard = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get("https://aqua-sense-lilac.vercel.app/api/leaderboard"); // Adjust API URL
+      const response = await axios.get("https://web-game-for-water-conservation-awareness.onrender.comapi/leaderboard"); // Adjust API URL
       const sortedPlayers = response.data.sort((a, b) => b.score - a.score);
       setPlayers(sortedPlayers);
       setLoading(false);

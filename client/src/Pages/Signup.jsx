@@ -34,7 +34,7 @@ export function Signup() {
     setLoading(true);
 
     try {
-      const response = await axios.post("https://aqua-sense-lilac.vercel.app/api/signup", {
+      const response = await axios.post("https://web-game-for-water-conservation-awareness.onrender.comapi/signup", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -44,7 +44,11 @@ export function Signup() {
 
       setTimeout(() => navigate("/login"), 2000); // Redirect after 2s
     } catch (error) {
-      toast.error(error.response?.data?.message || "Signup failed", { position: "top-right", autoClose: 3000 });
+      if (error.response) {
+        toast.error(error.response.data.message || "Signup failed", { position: "top-right", autoClose: 3000 });
+      } else {
+        toast.error("Network error", { position: "top-right", autoClose: 3000 });
+      }
     } finally {
       setLoading(false);
     }
